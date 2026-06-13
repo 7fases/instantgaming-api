@@ -33,12 +33,16 @@ def instantgaming_search(
         page = context.new_page()
 
         try:
+            print(f"[IG] Acessando: {url}")
             page.goto(url, wait_until="networkidle", timeout=30000)
+            print(f"[IG] Página carregada, título: {page.title()}")
 
             # Espera os cards de produto aparecerem
             page.wait_for_selector("article.item", timeout=15000)
+            print("[IG] Seletor article.item encontrado")
 
             articles = page.query_selector_all("article.item")
+            print(f"[IG] Total de articles encontrados: {len(articles)}")
 
             for article in articles:
                 try:
