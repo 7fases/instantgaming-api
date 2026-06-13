@@ -108,7 +108,8 @@ def debug_ig():
         resp = requests.get(url, headers=headers, timeout=20)
         return {
             "status_code": resp.status_code,
-            "html_snippet": resp.text[:3000],
+            "html_snippet": resp.text[resp.text.find('item force-badge'):resp.text.find('item force-badge')+2000] or "CLASSE NAO ENCONTRADA",
+            "has_results": 'item force-badge' in resp.text,
             "headers_received": dict(resp.headers),
         }
     except Exception as e:
