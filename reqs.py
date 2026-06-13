@@ -105,7 +105,11 @@ def instantgaming_search(
                         continue
 
         except Exception as e:
-            print(f"Playwright error: {e}")
+            print(f"[IG] ERRO Playwright: {type(e).__name__}: {e}")
+            try:
+                print(f"[IG] HTML atual (500 chars): {page.content()[:500]}")
+            except Exception:
+                pass
         finally:
             browser.close()
 
