@@ -95,6 +95,28 @@ def search_game_api_legacy(game):
     # Compat: redireciona para nova rota com querystring
     return redirect(url_for('search_game_api', query=game))
 
+@app.route('/api/debug')
+def debug_ig():
+    import requests
+    url = "https://www.instant-gaming.com/pt/pesquisar/?query=elden+ring"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    }
+    try:
+        resp = requests.get(url, headers=headers, timeout=20)
+        return {
+            "status_code": resp.status_code,
+            "html_snippet": resp.text[:3000],
+            "headers_received": dict(resp.headers),
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1", port=5000)
