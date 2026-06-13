@@ -65,11 +65,8 @@ def instantgaming_search(
     req = session.get(url, headers=headers, timeout=20)
     req.raise_for_status()
 
-    # DEBUG TEMPORÁRIO
-    print("STATUS:", req.status_code)
-    print("HTML SNIPPET:", req.text[:2000])
-
-    soup = BeautifulSoup(req.text, "html.parser")"item force-badge")
+    soup = BeautifulSoup(req.text, "html.parser")
+    article_items = soup.find_all("article", class_="item force-badge")
 
     # Build initial entries from the search page
     entries = []
